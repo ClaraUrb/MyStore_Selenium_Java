@@ -20,9 +20,9 @@ public class BaseTest extends DriverFactory {
         log.info("Landing page has been opened");
     }
 
-//    @AfterMethod
-//    public void tearDown() {
-//        driver.quit();
-//        log.info("Driver has been closed");
-//    }
+    @AfterMethod
+    public void tearDown() {
+        driver.quit();
+        log.info("Driver has been closed");
+    }
 }

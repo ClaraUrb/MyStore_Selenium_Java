@@ -25,7 +25,6 @@ public class MyAccountSection {
 
     public void verifyPersonalInfo(HashMap<String, String> userData) {
         CreateAccountSection createAccountSection = new CreateAccountSection(driver);
-        System.out.println(createAccountSection.firstName.getAttribute("value"));
         boolean isMale = createAccountSection.mr.isSelected();
         boolean isFemale = createAccountSection.mrs.isSelected();
         if (userData.get("socialTitle").equals("Mr")) {

@@ -31,7 +31,7 @@ public class CreateAccountSection {
     @FindBy(name = "password")
     public WebElement password;
 
-    @FindBy(className = "btn")
+    @FindBy(className = "input-group-btn")
     public WebElement showPasswordButton;
 
     @FindBy(name = "birthday")
@@ -62,6 +62,7 @@ public class CreateAccountSection {
         birthdate.sendKeys(userData.get("birthdate"));
         customerDataPrivacyRadio.click();
         termsAndConditionsRadio.click();
+        showPasswordButton.click();
         saveButton.click();
         return userData;
     }

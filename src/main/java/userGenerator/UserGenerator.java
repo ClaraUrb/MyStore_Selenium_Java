@@ -1,5 +1,7 @@
 package userGenerator;
 
+import com.github.javafaker.Faker;
+
 import java.util.*;
 
 public class UserGenerator {
@@ -7,13 +9,10 @@ public class UserGenerator {
 
     public HashMap<String, String> generateUser() {
         HashMap<String, String> userData = new HashMap<>();
+        Faker faker = new Faker();
         userData.put("socialTitle", generateSocialTitle());
-        if (userData.get("socialTitle").equals("Mrs")) {
-            userData.put("firstName", generateFirstNameFemale());
-        } else {
-            userData.put("firstName", generateFirstNameMale());
-        }
-        userData.put("lastName", generateLastName());
+        userData.put("firstName", faker.name().firstName());
+        userData.put("lastName", faker.name().lastName());
         userData.put("email", generateEmail());
         userData.put("birthdate", generateBirthdate());
         return userData;
@@ -22,20 +21,6 @@ public class UserGenerator {
     private String generateSocialTitle() {
         List<String> socialTitles = Arrays.asList("Mr", "Mrs");
         return socialTitles.get(random.nextInt(socialTitles.size() - 1));
-    }
-
-    private String generateFirstNameFemale() {
-        List<String> firstNames = Arrays.asList("Lana", "Mary", "Cristal", "Susan", "Nina");
-        return firstNames.get(random.nextInt(firstNames.size() - 1));
-    }
-    private String generateFirstNameMale() {
-        List<String> firstNames = Arrays.asList("Christian", "Clark", "Robert", "Frank", "Norm");
-        return firstNames.get(random.nextInt(firstNames.size() - 1));
-    }
-
-    private String generateLastName() {
-        List<String> firstNames = Arrays.asList("King", "Johnson", "Smith", "Moss", "Newman");
-        return firstNames.get(random.nextInt(firstNames.size() - 1));
     }
 
     private String generateEmail() {

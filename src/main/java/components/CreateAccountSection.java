@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 import userGenerator.UserGenerator;
 
 import java.util.HashMap;
@@ -61,7 +62,9 @@ public class CreateAccountSection {
         firstName.sendKeys(userData.get("firstName"));
         lastName.sendKeys(userData.get("lastName"));
         email.sendKeys(userData.get("email"));
-        password.sendKeys("password");
+        password.sendKeys(userData.get("password"));
+        showPasswordButton.click();
+        Assert.assertEquals(password.getAttribute("value"), userData.get("password"));
         birthdate.sendKeys(userData.get("birthdate"));
         customerDataPrivacyRadio.click();
         termsAndConditionsRadio.click();

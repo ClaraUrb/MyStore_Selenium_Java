@@ -15,7 +15,8 @@ public class UserGenerator {
         userData.put("socialTitle", generateSocialTitle());
         userData.put("firstName", faker.name().firstName());
         userData.put("lastName", faker.name().lastName());
-        userData.put("email", generateEmail());
+        userData.put("email", faker.internet().emailAddress());
+        userData.put("password", faker.internet().password());
         userData.put("birthdate", generateBirthdate());
         return userData;
     }
@@ -23,10 +24,6 @@ public class UserGenerator {
     private String generateSocialTitle() {
         List<String> socialTitles = Arrays.asList("Mr", "Mrs");
         return socialTitles.get(random.nextInt(socialTitles.size() - 1));
-    }
-
-    private String generateEmail() {
-        return "randomEmail" + random.nextInt(9999) + "@email.com";
     }
 
     private String generateBirthdate() {

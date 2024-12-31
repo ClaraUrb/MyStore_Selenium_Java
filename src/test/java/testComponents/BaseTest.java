@@ -1,6 +1,6 @@
 package testComponents;
 
-import configuration.DriverFactory;
+import factories.DriverFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;

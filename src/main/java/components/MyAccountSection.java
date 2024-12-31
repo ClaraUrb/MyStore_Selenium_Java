@@ -1,12 +1,11 @@
 package components;
 
+import models.User;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-
-import java.util.HashMap;
 
 public class MyAccountSection {
     private WebDriver driver;
@@ -23,19 +22,19 @@ public class MyAccountSection {
         accountInfo.click();
     }
 
-    public void verifyPersonalInfo(HashMap<String, String> userData) {
+    public void verifyPersonalInfo(User user) {
         CreateAccountSection createAccountSection = new CreateAccountSection(driver);
         boolean isMale = createAccountSection.mr.isSelected();
         boolean isFemale = createAccountSection.mrs.isSelected();
-        if (userData.get("socialTitle").equals("Mr")) {
+        if (user.getSocialTitle().equals("Mr")) {
             Assert.assertTrue(isMale);
-        } else if (userData.get("socialTitle").equals("Ms")) {
+        } else if (user.getSocialTitle().equals("Ms")) {
             Assert.assertTrue(isFemale);
         }
-        Assert.assertEquals(createAccountSection.firstName.getAttribute("value"), userData.get("firstName"));
-        Assert.assertEquals(createAccountSection.lastName.getAttribute("value"), userData.get("lastName"));
-        Assert.assertEquals(createAccountSection.email.getAttribute("value"), userData.get("email"));
-        Assert.assertEquals(createAccountSection.birthdate.getAttribute("value"), userData.get("birthdate"));
+        Assert.assertEquals(createAccountSection.firstName.getAttribute("value"), user.getFirstName());
+        Assert.assertEquals(createAccountSection.lastName.getAttribute("value"), user.getLastName());
+        Assert.assertEquals(createAccountSection.email.getAttribute("value"), user.getEmail());
+        Assert.assertEquals(createAccountSection.birthdate.getAttribute("value"), user.getBirthdate());
         testShowPasswordButtons();
     }
 

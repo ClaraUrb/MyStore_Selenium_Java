@@ -5,10 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 public class MyAccountSection {
     private WebDriver driver;
+    SoftAssert softAssert = new SoftAssert();
 
     @FindBy(id = "identity-link")
     private WebElement accountInfo;
@@ -27,24 +28,28 @@ public class MyAccountSection {
         boolean isMale = createAccountSection.mr.isSelected();
         boolean isFemale = createAccountSection.mrs.isSelected();
         if (user.getSocialTitle().equals("Mr")) {
-            Assert.assertTrue(isMale);
+            softAssert.assertTrue(isMale);
         } else if (user.getSocialTitle().equals("Ms")) {
-            Assert.assertTrue(isFemale);
+            softAssert.assertTrue(isFemale);
         }
-        Assert.assertEquals(createAccountSection.firstName.getAttribute("value"), user.getFirstName());
-        Assert.assertEquals(createAccountSection.lastName.getAttribute("value"), user.getLastName());
-        Assert.assertEquals(createAccountSection.email.getAttribute("value"), user.getEmail());
-        Assert.assertEquals(createAccountSection.birthdate.getAttribute("value"), user.getBirthdate());
+        softAssert.assertEquals(createAccountSection.firstName.getAttribute("value"), user.getFirstName());
+        softAssert.assertEquals(createAccountSection.lastName.getAttribute("value"), user.getLastName());
+        softAssert.assertEquals(createAccountSection.email.getAttribute("value"), user.getEmail());
+        softAssert.assertEquals(createAccountSection.birthdate.getAttribute("value"), user.getBirthdate());
         testShowPasswordButtons();
+        softAssert.assertAll();
     }
 
     private void testShowPasswordButtons() {
         CreateAccountSection createAccountSection = new CreateAccountSection(driver);
-        Assert.assertEquals(createAccountSection.showPasswordButton.getText(), "SHOW");
-        Assert.assertEquals(createAccountSection.showNewPasswordButton.getText(), "SHOW");
+
+        softAssert.assertEquals(createAccountSection.showPasswordButton.getText(), "SHOW");
+        softAssert.assertEquals(createAccountSection.showNewPasswordButton.getText(), "SHOW");
+
         createAccountSection.showPasswordButton.click();
-        Assert.assertEquals(createAccountSection.showPasswordButton.getText(), "HIDE");
+        softAssert.assertEquals(createAccountSection.showPasswordButton.getText(),"HIDE");
+
         createAccountSection.showNewPasswordButton.click();
-        Assert.assertEquals(createAccountSection.showNewPasswordButton.getText(), "HIDE");
+        softAssert.assertEquals(createAccountSection.showNewPasswordButton.getText(), "HIDE");
     }
 }

@@ -31,8 +31,11 @@ public class CreateAccountSection {
     @FindBy(name = "password")
     public WebElement password;
 
-    @FindBy(className = "input-group-btn")
+    @FindBy(xpath = "//input[@name='password']/following-sibling::span/button")
     public WebElement showPasswordButton;
+
+    @FindBy(xpath = "//input[@name='new_password']/following-sibling::span/button")
+    public WebElement showNewPasswordButton;
 
     @FindBy(name = "birthday")
     public WebElement birthdate;

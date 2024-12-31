@@ -1,14 +1,13 @@
 package components;
 
+import factories.UserFactory;
 import lombok.extern.slf4j.Slf4j;
+import models.User;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-import userGenerator.UserGenerator;
-
-import java.util.HashMap;
 
 @Slf4j
 public class CreateAccountSection {
@@ -55,22 +54,20 @@ public class CreateAccountSection {
         PageFactory.initElements(driver, this);
     }
 
-    public HashMap<String, String> createAccount() {
-        UserGenerator generator = new UserGenerator();
-        HashMap<String, String> userData = generator.generateUser();
-        tickSocialTitle(userData.get("socialTitle"));
-        firstName.sendKeys(userData.get("firstName"));
-        lastName.sendKeys(userData.get("lastName"));
-        email.sendKeys(userData.get("email"));
-        password.sendKeys(userData.get("password"));
+    public User createAccount() {
+        User user = UserFactory.createRandomUser();
+        tickSocialTitle(user.getSocialTitle());
+        firstName.sendKeys(user.getFirstName());
+        lastName.sendKeys(user.getLastName());
+        email.sendKeys(user.getEmail());
+        password.sendKeys(user.getPassword());
         showPasswordButton.click();
-        Assert.assertEquals(password.getAttribute("value"), userData.get("password"));
-        birthdate.sendKeys(userData.get("birthdate"));
+        Assert.assertEquals(password.getAttribute("value"), user.getPassword());
+        birthdate.sendKeys(user.getBirthdate());
         customerDataPrivacyRadio.click();
         termsAndConditionsRadio.click();
-        showPasswordButton.click();
         saveButton.click();
-        return userData;
+        return user;
     }
 
     private void tickSocialTitle(String socialTitle) {

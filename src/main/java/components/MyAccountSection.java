@@ -35,5 +35,17 @@ public class MyAccountSection {
         Assert.assertEquals(createAccountSection.firstName.getAttribute("value"), userData.get("firstName"));
         Assert.assertEquals(createAccountSection.lastName.getAttribute("value"), userData.get("lastName"));
         Assert.assertEquals(createAccountSection.email.getAttribute("value"), userData.get("email"));
+        Assert.assertEquals(createAccountSection.birthdate.getAttribute("value"), userData.get("birthdate"));
+        testShowPasswordButtons();
+    }
+
+    private void testShowPasswordButtons() {
+        CreateAccountSection createAccountSection = new CreateAccountSection(driver);
+        Assert.assertEquals(createAccountSection.showPasswordButton.getText(), "SHOW");
+        Assert.assertEquals(createAccountSection.showNewPasswordButton.getText(), "SHOW");
+        createAccountSection.showPasswordButton.click();
+        Assert.assertEquals(createAccountSection.showPasswordButton.getText(), "HIDE");
+        createAccountSection.showNewPasswordButton.click();
+        Assert.assertEquals(createAccountSection.showNewPasswordButton.getText(), "HIDE");
     }
 }

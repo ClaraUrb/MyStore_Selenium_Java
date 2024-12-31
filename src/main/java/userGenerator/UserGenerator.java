@@ -2,14 +2,16 @@ package userGenerator;
 
 import com.github.javafaker.Faker;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class UserGenerator {
     Random random = new Random();
+    Faker faker = new Faker();
 
     public HashMap<String, String> generateUser() {
         HashMap<String, String> userData = new HashMap<>();
-        Faker faker = new Faker();
+
         userData.put("socialTitle", generateSocialTitle());
         userData.put("firstName", faker.name().firstName());
         userData.put("lastName", faker.name().lastName());
@@ -28,7 +30,7 @@ public class UserGenerator {
     }
 
     private String generateBirthdate() {
-        List<String> birthdays = Arrays.asList("05/31/1970", "10/01/1975", "12/31/1989", "07/13/1995", "03/23/2002");
-        return birthdays.get(random.nextInt(birthdays.size() - 1));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        return simpleDateFormat.format(faker.date().birthday());
     }
 }

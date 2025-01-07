@@ -1,6 +1,7 @@
 package factories;
 
 import com.github.javafaker.Faker;
+import helpers.DataSaver;
 import models.User;
 
 import static helpers.BirthdateFormatter.getRandomBirthdateFormatted;
@@ -16,6 +17,7 @@ public class UserFactory {
         user.setEmail(faker.internet().emailAddress());
         user.setPassword(faker.internet().password());
         user.setBirthdate(getRandomBirthdateFormatted());
+        DataSaver.saveUserDataToFile(user);
         return user;
     }
 }

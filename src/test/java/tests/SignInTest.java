@@ -25,5 +25,11 @@ public class SignInTest extends BaseTest {
     public void signInTest() {
         Header header = new Header(driver);
         header.openSignInPage();
+        SignInSection signIn = new SignInSection(driver);
+        User user = signIn.logInUsingExistingUser();
+        header.verifyNameInMyCustomerAccount(user);
+        MyAccountSection myAccountSection = new MyAccountSection(driver);
+        myAccountSection.openInfoSection();
+        myAccountSection.verifyPersonalInfo(user);
     }
 }

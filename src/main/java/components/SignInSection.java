@@ -1,5 +1,6 @@
 package components;
 
+import helpers.DataSaver;
 import models.User;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -30,5 +31,13 @@ public class SignInSection {
         newAccountButton.click();
         CreateAccountSection createAccountSection = new CreateAccountSection(driver);
         return createAccountSection.createAccount();
+    }
+
+    public User logInUsingExistingUser() {
+        User user = DataSaver.readUserDataFromFile();
+        emailInput.sendKeys(user.getEmail());
+        passwordInput.sendKeys(user.getPassword());
+        signInButton.click();
+        return user;
     }
 }

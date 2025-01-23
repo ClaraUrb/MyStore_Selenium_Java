@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
 @Slf4j
-public class CreateAccountSection {
+public class CreateAccountPage {
     private WebDriver driver;
 
     @FindBy(css = "input[name='id_gender'][value='1']")
@@ -49,7 +49,7 @@ public class CreateAccountSection {
     @FindBy(css = "footer button[type='submit']")
     public WebElement saveButton;
 
-    public CreateAccountSection(WebDriver driver) {
+    public CreateAccountPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }

@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
-public class Header {
+public class HeaderPage {
     private WebDriver driver;
 
     @FindBy(id = "header")
@@ -19,7 +19,7 @@ public class Header {
     @FindBy(className = "account")
     private WebElement myCustomerAccount;
 
-    public Header(WebDriver driver) {
+    public HeaderPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }

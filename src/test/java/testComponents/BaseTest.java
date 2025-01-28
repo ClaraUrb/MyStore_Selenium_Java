@@ -35,4 +35,10 @@ public class BaseTest extends DriverFactory {
         signInPage = new SignInPage(driver);
         myAccountPage = new MyAccountPage(driver);
     }
+
+    @AfterMethod
+    public void tearDown() {
+        driver.quit();
+        log.info("Driver has been closed");
+    }
 }

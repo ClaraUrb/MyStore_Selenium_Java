@@ -10,14 +10,15 @@ public class UserFactory {
 
     public static User createRandomUser() {
         Faker faker = new Faker();
-        User user = new User();
-        user.setSocialTitle(faker.options().option("Mr", "Mrs"));
-        user.setFirstName(faker.name().firstName());
-        user.setLastName(faker.name().lastName());
-        user.setEmail(faker.internet().emailAddress());
-        user.setPassword(faker.internet().password());
-        user.setBirthdate(getRandomBirthdateFormatted());
-        DataSaver.saveUserDataToFile(user);
-        return user;
+        User.UserBuilder user = User.builder();
+        user
+                .socialTitle(faker.options().option("Mr", "Mrs"))
+                .firstName(faker.name().firstName())
+                .lastName(faker.name().lastName())
+                .email(faker.internet().emailAddress())
+                .password(faker.internet().password())
+                .birthdate(getRandomBirthdateFormatted());
+        DataSaver.saveUserDataToFile(user.build());
+        return user.build();
     }
 }

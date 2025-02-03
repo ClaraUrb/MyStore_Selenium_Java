@@ -1,8 +1,6 @@
 package testComponents;
 
-import components.HeaderPage;
-import components.MyAccountPage;
-import components.SignInPage;
+import components.*;
 import factories.DriverFactory;
 import lombok.extern.slf4j.Slf4j;
 import models.User;
@@ -20,7 +18,10 @@ public class BaseTest extends DriverFactory {
     public HeaderPage headerPage;
     public SignInPage signInPage;
     public MyAccountPage myAccountPage;
+    public CreateAccountPage createAccountPage;
+    public ClothesPage clothesPage;
     public User user;
+    public User registeredUser;
 
     @BeforeMethod
     public void startTest() throws IOException {
@@ -34,6 +35,8 @@ public class BaseTest extends DriverFactory {
         headerPage = new HeaderPage(driver);
         signInPage = new SignInPage(driver);
         myAccountPage = new MyAccountPage(driver);
+        createAccountPage = new CreateAccountPage(driver);
+        clothesPage = new ClothesPage(driver);
     }
 
     @AfterMethod

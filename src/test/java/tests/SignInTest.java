@@ -1,9 +1,11 @@
 package tests;
 
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import testComponents.BaseTest;
 
 public class SignInTest extends BaseTest {
+    SoftAssert softAssert = new SoftAssert();
 
     @Test
     public void registerTest() {
@@ -11,7 +13,18 @@ public class SignInTest extends BaseTest {
         user = signInPage.createNewAccount();
         headerPage.openMyCustomerAccount();
         myAccountPage.openInfoSection();
-        myAccountPage.verifyPersonalInfo(user);
+        registeredUser = myAccountPage.readUserData();
+        softAssert.assertEquals(user, registeredUser);
+
+        softAssert.assertEquals(createAccountPage.showPasswordButton.getText(), "SHOW");
+        softAssert.assertEquals(createAccountPage.showNewPasswordButton.getText(), "SHOW");
+
+        createAccountPage.showPasswordButton.click();
+        softAssert.assertEquals(createAccountPage.showPasswordButton.getText(), "HIDE");
+
+        createAccountPage.showNewPasswordButton.click();
+        softAssert.assertEquals(createAccountPage.showNewPasswordButton.getText(), "HIDE");
+        softAssert.assertAll();
     }
 
     @Test
@@ -20,6 +33,8 @@ public class SignInTest extends BaseTest {
         user = signInPage.logInUsingExistingUser();
         headerPage.verifyNameInMyCustomerAccount(user);
         myAccountPage.openInfoSection();
-        myAccountPage.verifyPersonalInfo(user);
+        registeredUser = myAccountPage.readUserData();
+        softAssert.assertEquals(user, registeredUser);
+        softAssert.assertAll();
     }
 }

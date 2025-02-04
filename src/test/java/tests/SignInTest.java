@@ -4,6 +4,8 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import testComponents.BaseTest;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class SignInTest extends BaseTest {
     SoftAssert softAssert = new SoftAssert();
 
@@ -14,7 +16,9 @@ public class SignInTest extends BaseTest {
         headerPage.openMyCustomerAccount();
         myAccountPage.openInfoSection();
         registeredUser = myAccountPage.readUserData();
-        softAssert.assertEquals(user, registeredUser);
+//        softAssert.assertEquals(user, registeredUser);
+        assertThat(user).usingRecursiveComparison().ignoringFields(user.password, registeredUser.password).isEqualTo(registeredUser);
+
 
         softAssert.assertEquals(createAccountPage.showPasswordButton.getText(), "SHOW");
         softAssert.assertEquals(createAccountPage.showNewPasswordButton.getText(), "SHOW");

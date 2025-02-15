@@ -19,7 +19,8 @@ public class BaseTest extends DriverFactory {
     public SignInPage signInPage;
     public MyAccountPage myAccountPage;
     public CreateAccountPage createAccountPage;
-    public ClothesPage clothesPage;
+    public FilterPage filterPage;
+    public ProductPage productPage;
     public User user;
     public User registeredUser;
 
@@ -36,7 +37,8 @@ public class BaseTest extends DriverFactory {
         signInPage = new SignInPage(driver);
         myAccountPage = new MyAccountPage(driver);
         createAccountPage = new CreateAccountPage(driver);
-        clothesPage = new ClothesPage(driver);
+        filterPage = new FilterPage(driver);
+        productPage = new ProductPage(driver);
     }
 
     @AfterMethod

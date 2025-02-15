@@ -16,9 +16,7 @@ public class SignInTest extends BaseTest {
         headerPage.openMyCustomerAccount();
         myAccountPage.openInfoSection();
         registeredUser = myAccountPage.readUserData();
-//        softAssert.assertEquals(user, registeredUser);
-        assertThat(user).usingRecursiveComparison().ignoringFields(user.password, registeredUser.password).isEqualTo(registeredUser);
-
+        assertThat(user).usingRecursiveComparison().ignoringFields("password").isEqualTo(registeredUser);
 
         softAssert.assertEquals(createAccountPage.showPasswordButton.getText(), "SHOW");
         softAssert.assertEquals(createAccountPage.showNewPasswordButton.getText(), "SHOW");
@@ -38,7 +36,6 @@ public class SignInTest extends BaseTest {
         headerPage.verifyNameInMyCustomerAccount(user);
         myAccountPage.openInfoSection();
         registeredUser = myAccountPage.readUserData();
-        softAssert.assertEquals(user, registeredUser);
-        softAssert.assertAll();
+        assertThat(user).usingRecursiveComparison().ignoringFields("password").isEqualTo(registeredUser);
     }
 }

@@ -22,6 +22,9 @@ public class HeaderPage {
     @FindBy(css = "[id=\"category-3\"] a[class=\"dropdown-item\"]")
     private WebElement clothes;
 
+    @FindBy(css = "[id=\"category-6\"] a[class=\"dropdown-item\"]")
+    private WebElement accessories;
+
     public HeaderPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -37,6 +40,10 @@ public class HeaderPage {
 
     public void openClothesPage() {
         clothes.click();
+    }
+
+    public void openAccessoriesPage() {
+        accessories.click();
     }
 
     public void verifyNameInMyCustomerAccount(User user) {

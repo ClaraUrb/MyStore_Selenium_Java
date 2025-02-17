@@ -18,18 +18,18 @@ public class FilteringTest extends BaseTest {
 
         headerPage.openAccessoriesPage();
         softAssert.assertEquals(filterPage.getNumberOfProducts(), 10);
-        filterPage.clickCeramicFilter();
-        Thread.sleep(1000);
+        filterPage.clickFilter(filterPage.ceramicFilter);
+
         softAssert.assertEquals(filterPage.getNumberOfProducts(),4);
-        filterPage.clickPolyesterFilter();
-        Thread.sleep(1000);
+        filterPage.clickFilter(filterPage.polyesterFilter);
+
         softAssert.assertEquals(filterPage.getNumberOfProducts(),7);
-        filterPage.clickCeramicFilter();
-        Thread.sleep(1000);
-        filterPage.clickPolyesterFilter();
-        Thread.sleep(1000);
-        filterPage.clickRecycledCardboardFilter();
-        Thread.sleep(1000);
+        filterPage.clickFilter(filterPage.ceramicFilter);
+
+        filterPage.clickFilter(filterPage.polyesterFilter);
+
+        filterPage.clickFilter(filterPage.recycledCardboardFilter);
+
         softAssert.assertEquals(filterPage.getNumberOfProducts(),3);
 
         softAssert.assertAll();

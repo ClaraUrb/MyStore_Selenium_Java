@@ -1,5 +1,6 @@
 package components;
 
+import helpers.Waits;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,6 +15,8 @@ import java.util.List;
 public class FilterPage {
     private WebDriver driver;
 
+    Waits wait;
+
     @FindAll(@FindBy(css = "[class='product-description'] a"))
     private List<WebElement> products;
 
@@ -24,25 +27,27 @@ public class FilterPage {
     private WebElement womenCategory;
 
     @FindBy(xpath = "//a[contains(text(),\"Ceramic\")]/preceding-sibling::span")
-    private WebElement ceramicFilter;
+    public WebElement ceramicFilter;
 
     @FindBy(xpath = "//a[contains(text(),\"Polyester\")]/preceding-sibling::span")
-    private WebElement polyesterFilter;
+    public WebElement polyesterFilter;
 
     @FindBy(xpath = "//a[contains(text(),\"Recycled cardboard\")]/preceding-sibling::span")
-    private WebElement recycledCardboardFilter;
+    public WebElement recycledCardboardFilter;
 
     public FilterPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new Waits(driver);
         PageFactory.initElements(driver, this);
     }
 
-    public int getNumberOfProducts() {
+    public int getNumberOfProducts() throws InterruptedException {
         int numberOfProducts = 0;
+        wait.waitToLoad();
         for (WebElement product : products) {
             numberOfProducts++;
         }
-        log.info("Number of products: " + numberOfProducts);
+        log.info("Number of products: {}", numberOfProducts);
         return numberOfProducts;
     }
 
@@ -50,7 +55,7 @@ public class FilterPage {
         List<String> productNames = new ArrayList<>();
         for (WebElement product : products) {
             productNames.add(product.getText());
-            log.info("Product name is: " + product.getText());
+            log.info("Product name is: {}", product.getText());
         }
         return productNames;
     }
@@ -63,16 +68,9 @@ public class FilterPage {
         womenCategory.click();
     }
 
-    public void clickCeramicFilter() {
-        ceramicFilter.click();
-    }
-
-    public void clickPolyesterFilter() {
-        polyesterFilter.click();
-    }
-
-    public void clickRecycledCardboardFilter() {
-        recycledCardboardFilter.click();
+    public void clickFilter(WebElement filter) {
+        wait.waitToLoad();
+        filter.click();
     }
 
     public void openProductPage() {

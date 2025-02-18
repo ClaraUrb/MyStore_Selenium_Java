@@ -41,7 +41,7 @@ public class FilterPage {
         PageFactory.initElements(driver, this);
     }
 
-    public int getNumberOfProducts() throws InterruptedException {
+    public int getNumberOfProducts() {
         int numberOfProducts = 0;
         wait.waitToLoad();
         for (WebElement product : products) {

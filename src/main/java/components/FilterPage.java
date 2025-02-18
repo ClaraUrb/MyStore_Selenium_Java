@@ -15,8 +15,6 @@ import java.util.List;
 public class FilterPage {
     private WebDriver driver;
 
-    Waits wait;
-
     @FindAll(@FindBy(css = "[class='product-description'] a"))
     private List<WebElement> products;
 
@@ -35,15 +33,17 @@ public class FilterPage {
     @FindBy(xpath = "//a[contains(text(),\"Recycled cardboard\")]/preceding-sibling::span")
     public WebElement recycledCardboardFilter;
 
+    @FindBy(css = "div[class=\"overlay__inner\"")
+    private WebElement overlay;
+
     public FilterPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new Waits(driver);
         PageFactory.initElements(driver, this);
     }
 
     public int getNumberOfProducts() {
         int numberOfProducts = 0;
-        wait.waitToLoad();
+        Waits.waitToLoad(overlay, driver);
         for (WebElement product : products) {
             numberOfProducts++;
         }
@@ -69,7 +69,7 @@ public class FilterPage {
     }
 
     public void clickFilter(WebElement filter) {
-        wait.waitToLoad();
+        Waits.waitToLoad(overlay, driver);
         filter.click();
     }
 

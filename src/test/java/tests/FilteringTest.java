@@ -7,7 +7,7 @@ import testComponents.BaseTest;
 public class FilteringTest extends BaseTest {
     SoftAssert softAssert = new SoftAssert();
     @Test
-    public void registerTest() throws InterruptedException {
+    public void registerTest() {
         headerPage.openClothesPage();
         softAssert.assertEquals(filterPage.getNumberOfProducts(), 2);
         filterPage.clickWomenCategory();

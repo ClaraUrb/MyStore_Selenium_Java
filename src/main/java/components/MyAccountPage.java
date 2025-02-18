@@ -2,6 +2,7 @@ package components;
 
 import lombok.extern.slf4j.Slf4j;
 import models.User;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,6 +17,12 @@ public class MyAccountPage {
     @FindBy(id = "identity-link")
     private WebElement accountInfo;
 
+    @FindBy(id = "address-link")
+    private WebElement addressInfo;
+
+    @FindBy(id = "addresses-link")
+    private WebElement addressesInfo;
+
     public MyAccountPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -23,6 +30,14 @@ public class MyAccountPage {
 
     public void openInfoSection() {
         accountInfo.click();
+    }
+
+    public void openAddressSection() {
+        try {
+            addressInfo.click();
+        } catch (NoSuchElementException e) {
+            addressesInfo.click();
+        }
     }
 
     public User readUserData() {

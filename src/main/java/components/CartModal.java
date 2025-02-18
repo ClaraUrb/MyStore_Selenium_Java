@@ -19,8 +19,7 @@ public class CartModal {
     }
 
     public void proceedToCheckout() {
-        Waits wait = new Waits(driver);
-        wait.waitForElementToAppear(proceedToCheckout);
+        Waits.waitForElementToAppear(proceedToCheckout, driver);
         proceedToCheckout.click();
     }
 }

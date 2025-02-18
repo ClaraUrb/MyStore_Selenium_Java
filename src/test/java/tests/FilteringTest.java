@@ -7,7 +7,7 @@ import testComponents.BaseTest;
 public class FilteringTest extends BaseTest {
     SoftAssert softAssert = new SoftAssert();
     @Test
-    public void registerTest() {
+    public void filteringTest() {
         headerPage.openClothesPage();
         softAssert.assertEquals(filterPage.getNumberOfProducts(), 2);
         filterPage.clickWomenCategory();

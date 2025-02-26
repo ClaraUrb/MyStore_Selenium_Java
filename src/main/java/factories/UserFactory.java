@@ -4,7 +4,7 @@ import com.github.javafaker.Faker;
 import helpers.DataSaver;
 import models.User;
 
-import static helpers.BirthdateFormatter.getRandomBirthdateFormatted;
+import static helpers.StringUtils.getRandomBirthdateFormatted;
 
 public class UserFactory {
 

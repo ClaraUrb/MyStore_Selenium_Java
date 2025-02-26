@@ -1,15 +1,13 @@
 package tests;
 
 import helpers.DataSaver;
+import helpers.NumberFormatter;
+import helpers.StringUtils;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import testComponents.BaseTest;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
-
-public class PurchaseTest extends BaseTest {
+public class PurchaseTests extends BaseTest {
     SoftAssert softAssert = new SoftAssert();
 
     @Test
@@ -19,7 +17,6 @@ public class PurchaseTest extends BaseTest {
         myAccountPage.openAddressSection();
         addressPage.fillAddress();
         address = DataSaver.readAddressFromFile();
-        System.out.println(address.toString());
         softAssert.assertEquals(addressPage.getAddressBody(), address.toString());
         headerPage.openClothesPage();
         filterPage.clickCategory("Women");
@@ -27,9 +24,8 @@ public class PurchaseTest extends BaseTest {
         String productName = filterPage.getFirstProductName();
         filterPage.openProductPage();
         softAssert.assertEquals(productPage.getProductName(), productName);
-        String price = "$28.72";
-        double priceFormatted = Double.parseDouble(price.replace("$", ""));
-        softAssert.assertEquals(productPage.getPrice(), price);
+        String price = productPage.getPrice();
+        double priceFormatted = NumberFormatter.priceFormatter(price);
         String size = "M";
         productPage.setSize(size);
         softAssert.assertEquals(productPage.getQuantity(), "1");
@@ -47,9 +43,7 @@ public class PurchaseTest extends BaseTest {
         softAssert.assertEquals(cartPage.getTotalProductPrice(), "$" + priceFormatted * quantity);
         softAssert.assertEquals(cartPage.getNumberOfItems(), String.valueOf(quantity) + " items");
         softAssert.assertEquals(cartPage.getTotalPriceOfProducts(), "$" + priceFormatted * quantity);
-        double shippingPrice = 7.00;
-        DecimalFormat decimalFormat = new DecimalFormat("##.00", DecimalFormatSymbols.getInstance(Locale.US));
-        softAssert.assertEquals(cartPage.getShippingPrice(), "$" + decimalFormat.format(shippingPrice));
+        double shippingPrice = NumberFormatter.priceFormatter(cartPage.getShippingPrice());
         double totalPriceExpected = priceFormatted * quantity + shippingPrice;
         softAssert.assertEquals(cartPage.getTotalPrice(), "$" + totalPriceExpected);
         cartPage.proceedToCheckout();
@@ -58,7 +52,7 @@ public class PurchaseTest extends BaseTest {
         cartPage.confirmAddress();
         cartPage.setShippingMethod("Lorem ipsum");
         cartPage.finalizeOrder();
-        softAssert.assertEquals(cartPage.getConfirmationText().substring(1), "YOUR ORDER IS CONFIRMED");
+        softAssert.assertEquals(StringUtils.removeFirstChar(cartPage.getConfirmationText()), "YOUR ORDER IS CONFIRMED");
 
         softAssert.assertAll();
     }

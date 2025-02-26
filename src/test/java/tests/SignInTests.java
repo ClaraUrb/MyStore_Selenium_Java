@@ -6,7 +6,7 @@ import testComponents.BaseTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SignInTest extends BaseTest {
+public class SignInTests extends BaseTest {
     SoftAssert softAssert = new SoftAssert();
 
     @Test

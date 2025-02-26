@@ -22,7 +22,7 @@ public class PurchaseTest extends BaseTest {
         System.out.println(address.toString());
         softAssert.assertEquals(addressPage.getAddressBody(), address.toString());
         headerPage.openClothesPage();
-        filterPage.clickWomenCategory();
+        filterPage.clickCategory("Women");
         softAssert.assertEquals(filterPage.getNumberOfProducts(), 1);
         String productName = filterPage.getFirstProductName();
         filterPage.openProductPage();

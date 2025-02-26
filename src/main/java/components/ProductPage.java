@@ -24,9 +24,6 @@ public class ProductPage {
     @FindBy(id = "quantity_wanted")
     private WebElement quantity;
 
-    @FindBy(css = "button[class=\"btn btn-touchspin js-touchspin bootstrap-touchspin-up\"]")
-    private WebElement quantityUp;
-
     public ProductPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -51,9 +48,8 @@ public class ProductPage {
     }
 
     public void setQuantity(int number) {
-        for (int i = 1; i < number; i++) {
-            quantityUp.click();
-        }
+        quantity.clear();
+        quantity.sendKeys(String.valueOf(number));
     }
 
     public String getQuantity() {

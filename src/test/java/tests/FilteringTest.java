@@ -10,26 +10,19 @@ public class FilteringTest extends BaseTest {
     public void filteringTest() {
         headerPage.openClothesPage();
         softAssert.assertEquals(filterPage.getNumberOfProducts(), 2);
-        filterPage.clickWomenCategory();
+        filterPage.clickCategory("Women");
         softAssert.assertEquals(filterPage.getNumberOfProducts(),1);
-        String productName = filterPage.getFirstProductName();
-        filterPage.openProductPage();
-        softAssert.assertEquals(productPage.getProductName(), productName);
 
         headerPage.openAccessoriesPage();
         softAssert.assertEquals(filterPage.getNumberOfProducts(), 10);
-        filterPage.clickFilter(filterPage.ceramicFilter);
-
+        filterPage.clickFilter("Ceramic");
         softAssert.assertEquals(filterPage.getNumberOfProducts(),4);
-        filterPage.clickFilter(filterPage.polyesterFilter);
-
+        filterPage.clickFilter("Polyester");
         softAssert.assertEquals(filterPage.getNumberOfProducts(),7);
-        filterPage.clickFilter(filterPage.ceramicFilter);
 
-        filterPage.clickFilter(filterPage.polyesterFilter);
-
-        filterPage.clickFilter(filterPage.recycledCardboardFilter);
-
+        filterPage.clickFilter("Ceramic");
+        filterPage.clickFilter("Polyester");
+        filterPage.clickFilter("Recycled cardboard");
         softAssert.assertEquals(filterPage.getNumberOfProducts(),3);
 
         softAssert.assertAll();

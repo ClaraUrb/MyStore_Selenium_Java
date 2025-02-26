@@ -8,8 +8,8 @@ import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class FilterPage {
@@ -21,17 +21,11 @@ public class FilterPage {
     @FindBy(css = "[class='product-description'] a")
     private WebElement product;
 
-    @FindBy(xpath = "//a[text()=\"Women\"]")
-    private WebElement womenCategory;
+    @FindAll(@FindBy(css = "ul[class=\"category-sub-menu\"] li"))
+    private List<WebElement> category;
 
-    @FindBy(xpath = "//a[contains(text(),\"Ceramic\")]/preceding-sibling::span")
-    public WebElement ceramicFilter;
-
-    @FindBy(xpath = "//a[contains(text(),\"Polyester\")]/preceding-sibling::span")
-    public WebElement polyesterFilter;
-
-    @FindBy(xpath = "//a[contains(text(),\"Recycled cardboard\")]/preceding-sibling::span")
-    public WebElement recycledCardboardFilter;
+    @FindAll(@FindBy(css = "a[class=\"_gray-darker search-link js-search-link\"]"))
+    private List<WebElement> filterBy;
 
     @FindBy(css = "div[class=\"overlay__inner\"")
     private WebElement overlay;
@@ -42,35 +36,33 @@ public class FilterPage {
     }
 
     public int getNumberOfProducts() {
-        int numberOfProducts = 0;
         Waits.waitToLoad(overlay, driver);
-        for (WebElement product : products) {
-            numberOfProducts++;
-        }
-        log.info("Number of products: {}", numberOfProducts);
-        return numberOfProducts;
+        return products.size();
     }
 
     public List<String> getAllProductsNames() {
-        List<String> productNames = new ArrayList<>();
-        for (WebElement product : products) {
-            productNames.add(product.getText());
-            log.info("Product name is: {}", product.getText());
-        }
-        return productNames;
+        return products.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     public String getFirstProductName() {
         return product.getText();
     }
 
-    public void clickWomenCategory() {
-        womenCategory.click();
+    public void clickCategory(String categoryName) {
+        category
+                .stream()
+                .filter(c -> c.getText().equalsIgnoreCase(categoryName))
+                .findFirst()
+                .ifPresent(WebElement::click);
     }
 
-    public void clickFilter(WebElement filter) {
+    public void clickFilter(String filterName) {
         Waits.waitToLoad(overlay, driver);
-        filter.click();
+        filterBy
+                .stream()
+                .filter(filter -> filter.getText().contains(filterName))
+                .findFirst()
+                .ifPresent(WebElement::click);
     }
 
     public void openProductPage() {

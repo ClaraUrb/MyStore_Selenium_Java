@@ -1,6 +1,8 @@
 package tests;
 
 import helpers.DataSaver;
+import helpers.NumberFormatter;
+import helpers.StringUtils;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import testComponents.BaseTest;
@@ -19,7 +21,6 @@ public class PurchaseTest extends BaseTest {
         myAccountPage.openAddressSection();
         addressPage.fillAddress();
         address = DataSaver.readAddressFromFile();
-        System.out.println(address.toString());
         softAssert.assertEquals(addressPage.getAddressBody(), address.toString());
         headerPage.openClothesPage();
         filterPage.clickCategory("Women");
@@ -28,7 +29,7 @@ public class PurchaseTest extends BaseTest {
         filterPage.openProductPage();
         softAssert.assertEquals(productPage.getProductName(), productName);
         String price = "$28.72";
-        double priceFormatted = Double.parseDouble(price.replace("$", ""));
+        double priceFormatted = NumberFormatter.priceFormatter(price);
         softAssert.assertEquals(productPage.getPrice(), price);
         String size = "M";
         productPage.setSize(size);
@@ -58,7 +59,7 @@ public class PurchaseTest extends BaseTest {
         cartPage.confirmAddress();
         cartPage.setShippingMethod("Lorem ipsum");
         cartPage.finalizeOrder();
-        softAssert.assertEquals(cartPage.getConfirmationText().substring(1), "YOUR ORDER IS CONFIRMED");
+        softAssert.assertEquals(StringUtils.removeFirstChar(cartPage.getConfirmationText()), "YOUR ORDER IS CONFIRMED");
 
         softAssert.assertAll();
     }

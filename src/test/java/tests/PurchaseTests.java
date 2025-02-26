@@ -21,30 +21,30 @@ public class PurchaseTests extends BaseTest {
         headerPage.openClothesPage();
         filterPage.clickCategory("Women");
         softAssert.assertEquals(filterPage.getNumberOfProducts(), 1);
-        String productName = filterPage.getFirstProductName();
+        product.setName(filterPage.getFirstProductName());
         filterPage.openProductPage();
-        softAssert.assertEquals(productPage.getProductName(), productName);
-        String price = productPage.getPrice();
-        double priceFormatted = NumberFormatter.priceFormatter(price);
-        String size = "M";
-        productPage.setSize(size);
+        softAssert.assertEquals(productPage.getProductName(), product.getName());
+        product.setPrice(productPage.getPrice());
+        double priceFormatted = NumberFormatter.priceFormatter(product.getPrice());
+        product.setSize("M");
+        productPage.setSize(product.getSize());
         softAssert.assertEquals(productPage.getQuantity(), "1");
-        int quantity = 3;
-        productPage.setQuantity(quantity);
+        product.setOrderedQuantity(3);
+        productPage.setQuantity(product.getOrderedQuantity());
         softAssert.assertEquals(productPage.getQuantity(), "3");
 
         productPage.addItemToCart();
         cartModal.proceedToCheckout();
 
-        softAssert.assertEquals(cartPage.getProductName(), productName);
-        softAssert.assertEquals(cartPage.getUnitPrice(), price);
-        softAssert.assertEquals(cartPage.getSize(), size);
-        softAssert.assertEquals(cartPage.getQuantity(), String.valueOf(quantity));
-        softAssert.assertEquals(cartPage.getTotalProductPrice(), "$" + priceFormatted * quantity);
-        softAssert.assertEquals(cartPage.getNumberOfItems(), String.valueOf(quantity) + " items");
-        softAssert.assertEquals(cartPage.getTotalPriceOfProducts(), "$" + priceFormatted * quantity);
+        softAssert.assertEquals(cartPage.getProductName(), product.getName());
+        softAssert.assertEquals(cartPage.getUnitPrice(), product.getPrice());
+        softAssert.assertEquals(cartPage.getSize(), product.getSize());
+        softAssert.assertEquals(cartPage.getQuantity(), String.valueOf(product.getOrderedQuantity()));
+        softAssert.assertEquals(cartPage.getTotalProductPrice(), "$" + priceFormatted * product.getOrderedQuantity());
+        softAssert.assertEquals(cartPage.getNumberOfItems(), String.valueOf(product.getOrderedQuantity()) + " items");
+        softAssert.assertEquals(cartPage.getTotalPriceOfProducts(), "$" + priceFormatted * product.getOrderedQuantity());
         double shippingPrice = NumberFormatter.priceFormatter(cartPage.getShippingPrice());
-        double totalPriceExpected = priceFormatted * quantity + shippingPrice;
+        double totalPriceExpected = priceFormatted * product.getOrderedQuantity() + shippingPrice;
         softAssert.assertEquals(cartPage.getTotalPrice(), "$" + totalPriceExpected);
         cartPage.proceedToCheckout();
 

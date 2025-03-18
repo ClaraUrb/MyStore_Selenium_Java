@@ -7,6 +7,7 @@ public class Product {
 
     public String name;
     public String price;
+    public String totalPrice;
     public String size;
     public int orderedQuantity;
     public String color;

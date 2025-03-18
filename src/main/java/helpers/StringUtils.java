@@ -4,8 +4,6 @@ import com.github.javafaker.Faker;
 
 import java.text.SimpleDateFormat;
 
-import static org.apache.commons.lang3.StringUtils.substring;
-
 public class StringUtils {
 
     public static String getRandomBirthdateFormatted() {
@@ -16,5 +14,9 @@ public class StringUtils {
 
     public static String removeFirstChar(String string) {
         return string.substring(1);
+    }
+
+    public static int getIntFromString(String string) {
+        return Integer.parseInt(string.replaceAll("[^0-9]", ""));
     }
 }

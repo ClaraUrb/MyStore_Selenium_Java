@@ -13,6 +13,9 @@ public class CartModal {
     @FindBy(css = "a[class=\"btn btn-primary\"]")
     private WebElement proceedToCheckout;
 
+    @FindBy(css = "button[class=\"btn btn-secondary\"]")
+    private WebElement continueShopping;
+
     public CartModal(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -21,5 +24,10 @@ public class CartModal {
     public void proceedToCheckout() {
         Waits.waitForElementToAppear(proceedToCheckout, driver);
         proceedToCheckout.click();
+    }
+
+    public void continueShopping() {
+        Waits.waitForElementToAppear(proceedToCheckout, driver);
+        continueShopping.click();
     }
 }

@@ -17,6 +17,7 @@ public class BaseTest extends DriverFactory {
     private static final String URL = "http://146.59.32.4/index.php";
 
     public HeaderPage headerPage;
+    public HomePage homePage;
     public SignInPage signInPage;
     public MyAccountPage myAccountPage;
     public AddressPage addressPage;
@@ -39,6 +40,7 @@ public class BaseTest extends DriverFactory {
 
     public void getTestObjects() {
         headerPage = new HeaderPage(driver);
+        homePage = new HomePage(driver);
         signInPage = new SignInPage(driver);
         myAccountPage = new MyAccountPage(driver);
         addressPage = new AddressPage(driver);

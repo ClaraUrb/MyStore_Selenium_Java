@@ -76,10 +76,6 @@ public class HomePage {
         return Arrays.stream(productList).filter(product -> product.contains(string)).toList();
     }
 
-    public String getFirstProductName() {
-        return product.getText();
-    }
-
     public void openProductPage() {
         product.click();
     }
@@ -89,9 +85,7 @@ public class HomePage {
         if (products.stream().noneMatch(product -> product.getText().equalsIgnoreCase(string))) {
             nextPage.click();
             Waits.waitToLoad(overlay, driver);
-            products.stream().filter(product -> product.getText().equalsIgnoreCase(string)).findFirst().ifPresent(WebElement::click);
-        } else {
-            products.stream().filter(product -> product.getText().equalsIgnoreCase(string)).findFirst().ifPresent(WebElement::click);
         }
+        products.stream().filter(product -> product.getText().equalsIgnoreCase(string)).findFirst().ifPresent(WebElement::click);
     }
 }

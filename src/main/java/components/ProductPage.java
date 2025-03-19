@@ -1,6 +1,5 @@
 package components;
 
-import helpers.NumberFormatter;
 import helpers.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import models.Product;
@@ -17,6 +16,7 @@ import java.util.List;
 @Slf4j
 public class ProductPage {
     private WebDriver driver;
+    private Select select;
 
     @FindBy(css = "h1[itemprop=\"name\"]")
     private WebElement productName;
@@ -55,25 +55,25 @@ public class ProductPage {
         addToCart.click();
     }
 
-    public String getPrice() {
-        return price.getText();
+    public double getPrice() {
+        return StringUtils.priceFormatter(price.getText());
     }
 
     public void setSize(String size) {
         sizeDropdown.click();
-        Select select = new Select(sizeDropdown);
+        select = new Select(sizeDropdown);
         select.selectByVisibleText(size);
     }
 
     public String getSize() {
-        return sizeDropdown.getText();
+        select = new Select(sizeDropdown);
+        return select.getFirstSelectedOption().getText();
     }
 
     public String getColor() {
         List<WebElement> elements = colors.stream().filter(WebElement::isSelected).toList();
-        System.out.println(elements.size());
         if (elements.size() > 1) {
-            log.info("Something went wrong with color");
+            log.info("Something went wrong, too many colors");
             return null;
         } else if (elements.size() == 1) {
             return elements.getFirst().getAttribute("title");
@@ -83,22 +83,23 @@ public class ProductPage {
     }
 
     public String getDimension() {
-        Select select = new Select(dimensionsDropdown);
+        select = new Select(dimensionsDropdown);
         return select.getFirstSelectedOption().getText();
     }
 
     public String getPaperType() {
-        Select select = new Select(paperTypeDropdown);
+        select = new Select(paperTypeDropdown);
         return select.getFirstSelectedOption().getText();
     }
 
-    public void setQuantity(int number) {
+    public void setQuantity(int number) throws InterruptedException {
+        Thread.sleep(1000);
         quantity.clear();
         quantity.sendKeys(String.valueOf(number));
     }
 
-    public String getQuantity() {
-        return quantity.getAttribute("value");
+    public int getQuantity() {
+        return StringUtils.getIntFromString(quantity.getAttribute("value"));
     }
 
     public Product getProductInfo() {
@@ -107,28 +108,22 @@ public class ProductPage {
         try {
             product.setSize(getSize());
         } catch (NoSuchElementException e) {
-            product.setSize(null);
         }
         try {
             product.setColor(getColor());
         } catch (NoSuchElementException e) {
-            product.setColor(null);
         }
         try {
             product.setDimension(getDimension());
         } catch (NoSuchElementException e) {
-            product.setDimension(null);
         }
         try {
             product.setPaperType(getPaperType());
         } catch (NoSuchElementException e) {
-            product.setPaperType(null);
         }
-        product.setOrderedQuantity(Integer.parseInt(getQuantity()));
+        product.setOrderedQuantity(getQuantity());
         product.setPrice(getPrice());
-
-        double totalPrice = StringUtils.getIntFromString(getQuantity()) * NumberFormatter.priceFormatter(getPrice());
-        product.setTotalPrice("$" + NumberFormatter.round(totalPrice));
+        product.setTotalPrice(StringUtils.round(getQuantity() * getPrice()));
         return product;
     }
 }

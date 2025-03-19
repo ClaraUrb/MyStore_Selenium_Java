@@ -1,5 +1,6 @@
 package components;
 
+import helpers.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import models.Product;
 import org.openqa.selenium.By;
@@ -34,10 +35,10 @@ public class CartPage {
 
     private By productPrice = By.tagName("strong");
 
+    private By totalProductPrice = By.cssSelector("div[id=\"cart-subtotal-products\"] span[class=\"value\"]");
+
     @FindBy(css = "span[class=\"label js-subtotal\"]")
     private WebElement numberOfItems;
-
-    private By totalProductPrice = By.cssSelector("div[id=\"cart-subtotal-products\"] span[class=\"value\"]");
 
     @FindBy(css = "div[id=\"cart-subtotal-shipping\"] span[class=\"value\"]")
     private WebElement shippingPrice;
@@ -77,24 +78,24 @@ public class CartPage {
         PageFactory.initElements(driver, this);
     }
 
-    public String getTotalProductPrice() {
-        return driver.findElement(productPrice).getText();
+    public double getTotalProductPrice() {
+        return StringUtils.priceFormatter(driver.findElement(productPrice).getText());
     }
 
     public String getNumberOfItems() {
         return numberOfItems.getText();
     }
 
-    public String getTotalPriceOfProducts() {
-        return driver.findElement(totalProductPrice).getText();
+    public double getTotalPriceOfProducts() {
+        return StringUtils.priceFormatter(driver.findElement(totalProductPrice).getText());
     }
 
-    public String getShippingPrice() {
-        return shippingPrice.getText();
+    public double getShippingPrice() {
+        return StringUtils.priceFormatter(shippingPrice.getText());
     }
 
-    public String getTotalPrice() {
-        return totalPrice.getText();
+    public double getTotalPrice() {
+        return StringUtils.priceFormatter(totalPrice.getText());
     }
 
     public void proceedToCheckout() {
@@ -131,24 +132,20 @@ public class CartPage {
                 .findFirst().get();
         Product cartProduct = new Product();
         cartProduct.setName(cartItem.findElement(productName).getText());
-        cartProduct.setPrice(cartItem.findElement(unitPrice).getText());
+        cartProduct.setPrice(StringUtils.priceFormatter(cartItem.findElement(unitPrice).getText()));
         cartProduct.setOrderedQuantity(Integer.parseInt(cartItem.findElement(quantity).getAttribute("value")));
-        cartProduct.setTotalPrice(cartItem.findElement(productPrice).getText());
+        cartProduct.setTotalPrice(StringUtils.priceFormatter(cartItem.findElement(productPrice).getText()));
 
-        List<WebElement> elements = cartItem.findElements(color);
-        if (!elements.isEmpty()) {
+        if (!cartItem.findElements(color).isEmpty()) {
             cartProduct.setColor(cartItem.findElement(color).getText());
         }
-        elements = cartItem.findElements(size);
-        if (!elements.isEmpty()) {
+        if (!cartItem.findElements(size).isEmpty()) {
             cartProduct.setSize(cartItem.findElement(size).getText());
         }
-        elements = cartItem.findElements(dimension);
-        if (!elements.isEmpty()) {
+        if (!cartItem.findElements(dimension).isEmpty()) {
             cartProduct.setDimension(cartItem.findElement(dimension).getText());
         }
-        elements = cartItem.findElements(paperType);
-        if (!elements.isEmpty()) {
+        if (!cartItem.findElements(paperType).isEmpty()) {
             cartProduct.setPaperType(cartItem.findElement(paperType).getText());
         }
         return cartProduct;

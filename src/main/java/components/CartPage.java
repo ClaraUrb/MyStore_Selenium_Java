@@ -1,6 +1,8 @@
 package components;
 
 import helpers.StringUtils;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import models.Product;
 import org.openqa.selenium.By;
@@ -98,6 +100,7 @@ public class CartPage {
         return StringUtils.priceFormatter(totalPrice.getText());
     }
 
+    @Step("Proceed to checkout")
     public void proceedToCheckout() {
         proceedToCheckoutButton.click();
     }
@@ -106,15 +109,18 @@ public class CartPage {
         return address.getText();
     }
 
+    @Step("Confirm address")
     public void confirmAddress() {
         confirmAddressButton.click();
     }
 
     public void setShippingMethod(String comment) {
+        Allure.step("Set shipping method to: " + comment);
         deliveryMessage.sendKeys(comment);
         confirmDeliveryButton.click();
     }
 
+    @Step("Finalize order")
     public void finalizeOrder() {
         paymentOption.click();
         termsAndConditions.click();

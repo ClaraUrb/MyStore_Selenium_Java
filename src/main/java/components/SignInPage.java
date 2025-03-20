@@ -1,6 +1,8 @@
 package components;
 
 import helpers.DataSaver;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import models.User;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,14 +29,17 @@ public class SignInPage {
         PageFactory.initElements(driver, this);
     }
 
+    @Step("Create new account")
     public User createNewAccount() {
         newAccountButton.click();
         CreateAccountPage createAccountPage = new CreateAccountPage(driver);
         return createAccountPage.createAccount();
     }
 
+    @Step("Log in using existing user")
     public User logInUsingExistingUser() {
         User user = DataSaver.readUserDataFromFile();
+        Allure.addAttachment("User data: ", user.toString());
         emailInput.sendKeys(user.getEmail());
         passwordInput.sendKeys(user.getPassword());
         signInButton.click();

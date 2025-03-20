@@ -1,6 +1,8 @@
 package components;
 
 import helpers.StringUtils;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import models.Product;
 import org.openqa.selenium.NoSuchElementException;
@@ -51,6 +53,7 @@ public class ProductPage {
         return productName.getText();
     }
 
+    @Step("Add item to cart")
     public void addItemToCart() {
         addToCart.click();
     }
@@ -60,6 +63,7 @@ public class ProductPage {
     }
 
     public void setSize(String size) {
+        Allure.step("Set size to: " + size);
         sizeDropdown.click();
         select = new Select(sizeDropdown);
         select.selectByVisibleText(size);
@@ -93,6 +97,7 @@ public class ProductPage {
     }
 
     public void setQuantity(int number) throws InterruptedException {
+        Allure.step("Set quantity to: " + number);
         Thread.sleep(1000);
         quantity.clear();
         quantity.sendKeys(String.valueOf(number));

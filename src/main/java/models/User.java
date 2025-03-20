@@ -14,5 +14,17 @@ public class User implements Serializable {
     public String email;
     public String password;
     public String birthdate;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "socialTitle='" + socialTitle + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", birthdate='" + birthdate + '\'' +
+                '}';
+    }
 }
 

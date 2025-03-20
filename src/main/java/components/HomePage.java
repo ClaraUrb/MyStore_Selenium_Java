@@ -2,6 +2,8 @@ package components;
 
 import helpers.StringUtils;
 import helpers.Waits;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.openqa.selenium.WebDriver;
@@ -43,6 +45,7 @@ public class HomePage {
         PageFactory.initElements(driver, this);
     }
 
+    @Step("Open all products")
     public void openAllProducts() {
         allProducts.click();
     }
@@ -76,11 +79,13 @@ public class HomePage {
         return Arrays.stream(productList).filter(product -> product.contains(string)).toList();
     }
 
+    @Step("Open Product page")
     public void openProductPage() {
         product.click();
     }
 
     public void openProductPage(String string) {
+        Allure.step("Open Product page with name: " + string);
         Waits.waitToLoad(overlay, driver);
         if (products.stream().noneMatch(product -> product.getText().equalsIgnoreCase(string))) {
             nextPage.click();

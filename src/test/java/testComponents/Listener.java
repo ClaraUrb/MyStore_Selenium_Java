@@ -1,5 +1,6 @@
 package testComponents;
 
+import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -8,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -38,5 +40,6 @@ public class Listener extends BaseTest implements ITestListener {
         } catch (IOException exception) {
             exception.printStackTrace();
         }
+        Allure.addAttachment("Failure screenshot", new ByteArrayInputStream(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
     }
 }

@@ -1,6 +1,8 @@
 package components;
 
 import factories.AddressFactory;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import models.Address;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -38,8 +40,10 @@ public class AddressPage {
         PageFactory.initElements(driver, this);
     }
 
+    @Step("Fill address")
     public Address fillAddress() {
         Address address = AddressFactory.createRandomAddress();
+        Allure.addAttachment("Address: ", address.toString());
         addressFirstLine.sendKeys(address.getAddressFirstLine());
         city.sendKeys(address.getCity());
         state.click();

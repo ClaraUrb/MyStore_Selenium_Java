@@ -1,6 +1,7 @@
 package components;
 
 import helpers.Waits;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,11 +22,13 @@ public class CartModal {
         PageFactory.initElements(driver, this);
     }
 
+    @Step("Proceed to checkout")
     public void proceedToCheckout() {
         Waits.waitForElementToAppear(proceedToCheckout, driver);
         proceedToCheckout.click();
     }
 
+    @Step("Continue shopping")
     public void continueShopping() {
         Waits.waitForElementToAppear(proceedToCheckout, driver);
         continueShopping.click();

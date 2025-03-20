@@ -1,5 +1,7 @@
 package components;
 
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import models.User;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -30,23 +32,30 @@ public class HeaderPage {
         PageFactory.initElements(driver, this);
     }
 
+    @Step("Open SignIn page")
     public void openSignInPage() {
         signIn.click();
     }
 
+    @Step("Open My Customer Account page")
     public void openMyCustomerAccount() {
         myCustomerAccount.click();
     }
 
+    @Step("Open Clothes page")
     public void openClothesPage() {
         clothes.click();
     }
 
+    @Step("Open Accessories page")
     public void openAccessoriesPage() {
         accessories.click();
     }
 
+    @Step("Verify name in My Customer Account")
     public void verifyNameInMyCustomerAccount(User user) {
+        Allure.addAttachment("Expected: ", user.getFirstName() + " " + user.getLastName());
+        Allure.addAttachment("Actual: ", myCustomerAccount.getText());
         Assert.assertEquals(myCustomerAccount.getText(), user.getFirstName() + " " + user.getLastName());
     }
 }

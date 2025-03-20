@@ -1,5 +1,6 @@
 package components;
 
+import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import models.User;
 import org.openqa.selenium.NoSuchElementException;
@@ -28,10 +29,12 @@ public class MyAccountPage {
         PageFactory.initElements(driver, this);
     }
 
+    @Step("Open info section")
     public void openInfoSection() {
         accountInfo.click();
     }
 
+    @Step("Open address section")
     public void openAddressSection() {
         try {
             addressInfo.click();

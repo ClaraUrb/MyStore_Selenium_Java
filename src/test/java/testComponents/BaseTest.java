@@ -5,10 +5,13 @@ import factories.DriverFactory;
 import lombok.extern.slf4j.Slf4j;
 import models.Address;
 import models.User;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 
+import java.io.File;
 import java.io.IOException;
 
 @Slf4j
@@ -35,7 +38,6 @@ public class BaseTest extends DriverFactory {
         driver = initializeDriver();
         getTestObjects();
         driver.get(URL);
-        log.info("Landing page has been opened");
     }
 
     public void getTestObjects() {
@@ -49,6 +51,25 @@ public class BaseTest extends DriverFactory {
         productPage = new ProductPage(driver);
         cartModal = new CartModal(driver);
         cartPage = new CartPage(driver);
+    }
+
+    @BeforeSuite
+    public void cleanAllureResultsDir() {
+        try {
+            FileUtils.cleanDirectory(new File(System.getProperty("user.dir") + "\\allure-results"));
+        } catch (IOException e) {
+            log.info("Clearing folder allure-results has failed");
+            throw new RuntimeException(e);
+        }
+        log.info("Folder allure-results has been emptied");
+
+        try {
+            FileUtils.cleanDirectory(new File(System.getProperty("user.dir") + "\\screenshots"));
+        } catch (IOException e) {
+            log.info("Clearing folder screenshots has failed");
+            throw new RuntimeException(e);
+        }
+        log.info("Folder screenshots has been emptied");
     }
 
     @AfterMethod

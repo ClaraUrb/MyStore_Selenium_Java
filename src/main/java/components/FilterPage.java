@@ -1,6 +1,7 @@
 package components;
 
 import helpers.Waits;
+import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,6 +30,7 @@ public class FilterPage {
     }
 
     public void clickCategory(String categoryName) {
+        Allure.step("Click category: " + categoryName);
         category
                 .stream()
                 .filter(c -> c.getText().equalsIgnoreCase(categoryName))
@@ -38,6 +40,7 @@ public class FilterPage {
 
     public void clickFilter(String filterName) {
         Waits.waitToLoad(overlay, driver);
+        Allure.step("Click filter: " + filterName);
         filterBy
                 .stream()
                 .filter(filter -> filter.getText().contains(filterName))

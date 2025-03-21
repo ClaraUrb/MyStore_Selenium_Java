@@ -3,6 +3,7 @@ package factories;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.FileInputStream;
@@ -20,7 +21,12 @@ public class DriverFactory {
         String browserName = properties.getProperty("browser");
         switch (browserName) {
             case "firefox" -> driver = new FirefoxDriver();
-            case "chrome" -> driver = new ChromeDriver();
+            case "chrome" -> {
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--unsafely-treat-insecure-origin-as-secure=http://146.59.32.4/index.php");
+                chromeOptions.addArguments("--disable-search-engine-choice-screen");
+                driver = new ChromeDriver(chromeOptions);
+            }
         }
         driver.manage().window().maximize();
         log.info("Driver has been initialized. Browser: \"{}\"", browserName);

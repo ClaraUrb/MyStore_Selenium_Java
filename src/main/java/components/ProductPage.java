@@ -16,8 +16,8 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.List;
 
 @Slf4j
-public class ProductPage {
-    private WebDriver driver;
+public class ProductPage extends BasePage {
+
     private Select select;
 
     @FindBy(css = "h1[itemprop=\"name\"]")
@@ -45,7 +45,7 @@ public class ProductPage {
     private WebElement quantity;
 
     public ProductPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 

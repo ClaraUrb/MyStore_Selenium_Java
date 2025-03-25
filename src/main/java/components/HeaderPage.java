@@ -9,8 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
-public class HeaderPage {
-    private WebDriver driver;
+public class HeaderPage extends BasePage {
 
     @FindBy(id = "header")
     private WebElement header;
@@ -28,7 +27,7 @@ public class HeaderPage {
     private WebElement accessories;
 
     public HeaderPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 

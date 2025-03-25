@@ -12,8 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 @Slf4j
-public class FilterPage {
-    private WebDriver driver;
+public class FilterPage extends BasePage {
 
     @FindBy(css = "div[class=\"overlay__inner\"")
     private WebElement overlay;
@@ -25,7 +24,7 @@ public class FilterPage {
     private List<WebElement> filterBy;
 
     public FilterPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 

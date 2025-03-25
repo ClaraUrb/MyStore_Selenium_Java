@@ -10,8 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
 @Slf4j
-public class CreateAccountPage {
-    private WebDriver driver;
+public class CreateAccountPage extends BasePage {
 
     @FindBy(css = "input[name='id_gender'][value='1']")
     public WebElement mr;
@@ -50,7 +49,7 @@ public class CreateAccountPage {
     public WebElement saveButton;
 
     public CreateAccountPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 

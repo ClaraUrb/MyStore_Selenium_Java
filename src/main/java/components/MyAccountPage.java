@@ -10,9 +10,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 @Slf4j
-public class MyAccountPage {
+public class MyAccountPage extends BasePage {
 
-    private WebDriver driver;
     public String socialTitle;
 
     @FindBy(id = "identity-link")
@@ -25,7 +24,7 @@ public class MyAccountPage {
     private WebElement addressesInfo;
 
     public MyAccountPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 

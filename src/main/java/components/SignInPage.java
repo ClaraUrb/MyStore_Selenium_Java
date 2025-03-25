@@ -9,8 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class SignInPage {
-    private WebDriver driver;
+public class SignInPage extends BasePage {
 
     @FindBy(css = "input[name=\'email\'][class=\'form-control\']")
     public WebElement emailInput;
@@ -25,7 +24,7 @@ public class SignInPage {
     public WebElement newAccountButton;
 
     public SignInPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 

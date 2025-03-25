@@ -7,9 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class CartModal {
-
-    private WebDriver driver;
+public class CartModal extends BasePage {
 
     @FindBy(css = "a[class=\"btn btn-primary\"]")
     private WebElement proceedToCheckout;
@@ -18,7 +16,7 @@ public class CartModal {
     private WebElement continueShopping;
 
     public CartModal(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 

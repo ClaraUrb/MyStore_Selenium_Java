@@ -2,7 +2,6 @@ package components;
 
 import factories.AddressFactory;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Step;
 import models.Address;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,7 +9,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-public class AddressPage {
+import static io.qameta.allure.Allure.step;
+
+public class AddressPage extends BasePage {
     private WebDriver driver;
     Select select;
 
@@ -36,21 +37,22 @@ public class AddressPage {
     private WebElement addressBody;
 
     public AddressPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 
-    @Step("Fill address")
     public Address fillAddress() {
         Address address = AddressFactory.createRandomAddress();
-        Allure.addAttachment("Address: ", address.toString());
-        addressFirstLine.sendKeys(address.getAddressFirstLine());
-        city.sendKeys(address.getCity());
-        state.click();
-        select = new Select(state);
-        select.selectByVisibleText(address.getState());
-        zipCode.sendKeys(address.getZipCode());
-        saveButton.click();
+        step("Fill address", () -> {
+            Allure.addAttachment("Address: ", address.toString());
+            addressFirstLine.sendKeys(address.getAddressFirstLine());
+            city.sendKeys(address.getCity());
+            state.click();
+            select = new Select(state);
+            select.selectByVisibleText(address.getState());
+            zipCode.sendKeys(address.getZipCode());
+            saveButton.click();
+        });
         return address;
     }
 

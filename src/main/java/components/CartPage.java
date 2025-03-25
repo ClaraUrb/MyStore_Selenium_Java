@@ -15,8 +15,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 @Slf4j
-public class CartPage {
-    private WebDriver driver;
+public class CartPage extends BasePage {
 
     @FindAll(@FindBy(className = "cart-item"))
     private List<WebElement> cartItems;
@@ -76,7 +75,7 @@ public class CartPage {
     private WebElement orderConfirmationText;
 
     public CartPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 

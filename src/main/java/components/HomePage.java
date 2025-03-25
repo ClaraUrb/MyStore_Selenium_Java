@@ -16,8 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
-public class HomePage {
-    private WebDriver driver;
+public class HomePage extends BasePage {
 
     @FindBy(className = "all-product-link")
     private WebElement allProducts;
@@ -41,7 +40,7 @@ public class HomePage {
     private WebElement previousPage;
 
     public HomePage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 

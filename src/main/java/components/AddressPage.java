@@ -3,6 +3,7 @@ package components;
 import factories.AddressFactory;
 import io.qameta.allure.Allure;
 import models.Address;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -36,6 +37,12 @@ public class AddressPage extends BasePage {
     @FindBy(css = "div[class=\"address-body\"] address")
     private WebElement addressBody;
 
+    @FindBy(css = "a[data-link-action=\"delete-address\"] span")
+    private WebElement deleteAddress;
+
+    @FindBy(css = "a[data-link-action=\"add-address\"] span")
+    private WebElement newAddress;
+
     public AddressPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
@@ -45,13 +52,20 @@ public class AddressPage extends BasePage {
         Address address = AddressFactory.createRandomAddress();
         step("Fill address", () -> {
             Allure.addAttachment("Address: ", address.toString());
-            addressFirstLine.sendKeys(address.getAddressFirstLine());
-            city.sendKeys(address.getCity());
-            state.click();
-            select = new Select(state);
-            select.selectByVisibleText(address.getState());
-            zipCode.sendKeys(address.getZipCode());
-            saveButton.click();
+            try {
+                addressFirstLine.sendKeys(address.getAddressFirstLine());
+            } catch (NoSuchElementException e) {
+                deleteAddress.click();
+                newAddress.click();
+                addressFirstLine.sendKeys(address.getAddressFirstLine());
+            } finally {
+                city.sendKeys(address.getCity());
+                state.click();
+                select = new Select(state);
+                select.selectByVisibleText(address.getState());
+                zipCode.sendKeys(address.getZipCode());
+                saveButton.click();
+            }
         });
         return address;
     }

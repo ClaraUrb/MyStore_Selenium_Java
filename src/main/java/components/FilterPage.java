@@ -37,7 +37,7 @@ public class FilterPage extends BasePage {
                 .ifPresent(WebElement::click);
     }
 
-    public void clickFilter(String filterName) {
+    public FilterPage clickFilter(String filterName) {
         Waits.waitToLoad(overlay, driver);
         Allure.step("Click filter: " + filterName);
         filterBy
@@ -45,5 +45,6 @@ public class FilterPage extends BasePage {
                 .filter(filter -> filter.getText().contains(filterName))
                 .findFirst()
                 .ifPresent(WebElement::click);
+        return this;
     }
 }
